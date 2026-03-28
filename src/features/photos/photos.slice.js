@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+import photosData from "./photos.data";
 
 const initialState = {
-  photos: [],
+  photos: photosData,
 };
 
 const photosSlice = createSlice({
@@ -23,10 +24,10 @@ const photosSlice = createSlice({
       }
     },
     editPhotoCaption(state, action) {
-      const { id, caption } = action.payload;
+      const { id, newCaption } = action.payload;
       const photo = state.photos.find((photo) => photo.id === id);
       if (photo) {
-        photo.caption = caption;
+        photo.caption = newCaption;
       }
     },
   },
@@ -39,11 +40,11 @@ export const {
   editPhotoCaption,
 } = photosSlice.actions;
 
-export const selectPhotos = (state) => state.photos.photos;
+export const selectAllPhotos = (state) => state.photos.photos;
 
 export const selectFilteredPhotos = (state) => {
   const photos = state.photos.photos;
-  const term = state.search.term || "";
+  const term = state.search.searchTerm || "";
 
   return photos.filter((photo) =>
     photo.caption.toLowerCase().includes(term.toLowerCase())

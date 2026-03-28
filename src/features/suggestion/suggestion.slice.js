@@ -1,43 +1,38 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const fetchSuggestion = createAsyncThunk(
-  "suggestion/fetch",
+  "suggestion/fetchSuggestion",
   async () => {
     const response = await fetch("http://localhost:3004/api/suggestion");
-    const data = await response.json();
-    return data;
+    return await response.json();
   }
 );
 
-const initialState = {
-  suggestion: {},
-  loading: false,
-  error: false,
-};
-
 const suggestionSlice = createSlice({
   name: "suggestion",
-  initialState,
+  initialState: {
+    suggestion: null,
+    isLoading: false,
+    error: null,
+  },
   reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchSuggestion.pending, (state) => {
-        state.loading = true;
-        state.error = false;
+        state.isLoading = true;
+        state.error = null;
       })
       .addCase(fetchSuggestion.fulfilled, (state, action) => {
-        state.loading = false;
+        state.isLoading = false;
         state.suggestion = action.payload;
       })
-      .addCase(fetchSuggestion.rejected, (state) => {
-        state.loading = false;
-        state.error = true;
+      .addCase(fetchSuggestion.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
       });
   },
 });
 
-export default suggestionSlice.reducer;
+export const selectSuggestion = (state) => state.suggestion;
 
-export const selectSuggestion = (state) => state.suggestion.suggestion;
-export const selectLoading = (state) => state.suggestion.loading;
-export const selectError = (state) => state.suggestion.error;
+export default suggestionSlice.reducer;

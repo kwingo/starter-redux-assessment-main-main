@@ -1,42 +1,13 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  fetchSuggestion,
-  selectError,
-  selectLoading,
-  selectSuggestion,
-} from './suggestion.slice';
-import './suggestion.css';
+import ReactDOM from "react-dom/client";
+import { Provider } from "react-redux";
+import App from "./App";
+import { store } from "./app/store";
+import "./index.css";
 
-export default function Suggestion() {
-  const suggestion = useSelector(selectSuggestion);
-  const loading = useSelector(selectLoading);
-  const error = useSelector(selectError);
-  const dispatch = useDispatch();
+const root = ReactDOM.createRoot(document.getElementById("root"));
 
-  useEffect(() => {
-    dispatch(fetchSuggestion());
-  }, [dispatch]);
-
-  let render;
-  if (loading) {
-    render = <h3>Loading...</h3>;
-  } else if (error) {
-    render = <h3>Sorry, we're having trouble loading the suggestion.</h3>;
-  } else {
-    const { imageUrl, caption } = suggestion;
-    render = (
-      <>
-        <img alt={caption} src={imageUrl} />
-        <p>{caption}</p>
-      </>
-    );
-  }
-
-  return (
-    <section className="suggestion-container">
-      <h2>Suggestion of the Day</h2>
-      {render}
-    </section>
-  );
-}
+root.render(
+  <Provider store={store}>
+    <App />
+  </Provider>
+);

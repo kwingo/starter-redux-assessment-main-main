@@ -1,57 +1,47 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { addPhoto } from '../photos.slice';
-
-// Task 2: Import the `useDispatch()` method from the appropriate package
-// Task 3: Import the `addPhoto()` action creator from the photos slice
-
-import './create.css';
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addPhoto } from "../photos.slice";
 
 export default function CreatePhoto() {
-  const [formData, setFormData] = useState({ imageUrl: '', caption: '' });
-  // Task 4: Store a reference to the Redux store's dispatch method in a variable called `dispatch`
   const dispatch = useDispatch();
+  const [caption, setCaption] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
 
-  function handleChange({ target: { name, value } }) {
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  }
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    // Task 5: Dispatch the `addPhoto()` action creator, passing in the form data
+    if (!caption.trim() || !imageUrl.trim()) {
+      return;
+    }
+
+    const formData = {
+      id: Date.now(),
+      caption,
+      imageUrl,
+      isFavorite: false,
+    };
+
     dispatch(addPhoto(formData));
-    setFormData({ imageUrl: '', caption: '' });
-  }
+    setCaption("");
+    setImageUrl("");
+  };
 
   return (
-    <form className="create-form" onSubmit={handleSubmit}>
-      <h2>Add a dog</h2>
-      <div>
-        <label htmlFor="url">Enter your image's url: </label>
-        <input
-          id="url"
-          name="imageUrl"
-          onChange={handleChange}
-          placeholder="e.g., https://images.dog.ceo/breeds/australian-shepherd/pepper.jpg"
-          type="text"
-          value={formData.imageUrl}
-        />
-      </div>
-      <div>
-        <label htmlFor="caption">Enter your image's caption: </label>
-        <input
-          id="caption"
-          name="caption"
-          onChange={handleChange}
-          placeholder="e.g., Australian Shepherd"
-          type="text"
-          value={formData.caption}
-        />
-      </div>
-      <input type="submit" />
+    <form onSubmit={handleSubmit}>
+      <h2>Add a Photo</h2>
+      <input
+        type="text"
+        placeholder="Caption"
+        value={caption}
+        onChange={(e) => setCaption(e.target.value)}
+      />
+      <input
+        type="text"
+        placeholder="Image URL"
+        value={imageUrl}
+        onChange={(e) => setImageUrl(e.target.value)}
+      />
+      <button type="submit">Add Photo</button>
     </form>
   );
 }
