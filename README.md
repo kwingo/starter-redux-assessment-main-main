@@ -23,3 +23,5 @@ You may also see any lint errors in the console.
 ### `npm test`
 
 Runs the test suites.
+
+I used AI mainly to support my understanding of concepts rather than to fix issues directly.
