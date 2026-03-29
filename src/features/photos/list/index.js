@@ -1,3 +1,4 @@
+import "./list.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectFilteredPhotos,
@@ -7,8 +8,8 @@ import {
 } from "../photos.slice";
 
 export default function PhotosList() {
-  const photos = useSelector(selectFilteredPhotos);
   const dispatch = useDispatch();
+  const photos = useSelector(selectFilteredPhotos);
 
   const handleDelete = (id) => {
     dispatch(removePhoto(id));
@@ -27,23 +28,23 @@ export default function PhotosList() {
   };
 
   return (
-    <div>
+    <ul>
       {photos.map((photo) => (
-        <div key={photo.id}>
-          <img src={photo.imageUrl} alt={photo.caption} width="250" />
+        <li key={photo.id}>
+          <img src={photo.imageUrl} alt={photo.caption} />
           <p>{photo.caption}</p>
 
-          <button onClick={() => handleDelete(photo.id)}>Delete</button>
-
-          <button onClick={() => handleToggleFavorite(photo.id)}>
-            {photo.isFavorite ? "Favorited" : "Favorite"}
-          </button>
-
-          <button onClick={() => handleEditCaption(photo.id)}>
-            Edit Caption
-          </button>
-        </div>
+          <div className="photo-actions">
+            <button onClick={() => handleDelete(photo.id)}>Delete</button>
+            <button onClick={() => handleToggleFavorite(photo.id)}>
+              {photo.isFavorite ? "Favorited" : "Favorite"}
+            </button>
+            <button onClick={() => handleEditCaption(photo.id)}>
+              Edit Caption
+            </button>
+          </div>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }

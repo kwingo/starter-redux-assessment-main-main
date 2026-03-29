@@ -1,47 +1,58 @@
+import "./create.css";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addPhoto } from "../photos.slice";
 
 export default function CreatePhoto() {
   const dispatch = useDispatch();
-  const [caption, setCaption] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const [caption, setCaption] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!caption.trim() || !imageUrl.trim()) {
-      return;
-    }
+    if (!imageUrl.trim() || !caption.trim()) return;
 
-    const formData = {
-      id: Date.now(),
-      caption,
-      imageUrl,
-      isFavorite: false,
-    };
+    dispatch(
+      addPhoto({
+        id: Date.now(),
+        imageUrl,
+        caption,
+        isFavorite: false,
+      })
+    );
 
-    dispatch(addPhoto(formData));
-    setCaption("");
     setImageUrl("");
+    setCaption("");
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Add a Photo</h2>
-      <input
-        type="text"
-        placeholder="Caption"
-        value={caption}
-        onChange={(e) => setCaption(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="Image URL"
-        value={imageUrl}
-        onChange={(e) => setImageUrl(e.target.value)}
-      />
-      <button type="submit">Add Photo</button>
+    <form className="create-form" onSubmit={handleSubmit}>
+      <h2>Add a dog</h2>
+
+      <div>
+        <label htmlFor="imageUrl">Enter your image&apos;s url:</label>
+        <input
+          id="imageUrl"
+          type="text"
+          placeholder="e.g., https://images.dog.ceo/breeds/australian-shepherd/pepper.jpg"
+          value={imageUrl}
+          onChange={(e) => setImageUrl(e.target.value)}
+        />
+      </div>
+
+      <div>
+        <label htmlFor="caption">Enter your image&apos;s caption:</label>
+        <input
+          id="caption"
+          type="text"
+          placeholder="e.g., Australian Shepherd"
+          value={caption}
+          onChange={(e) => setCaption(e.target.value)}
+        />
+      </div>
+
+      <input type="submit" value="Submit" />
     </form>
   );
 }

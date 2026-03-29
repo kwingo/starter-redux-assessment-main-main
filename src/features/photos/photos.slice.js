@@ -26,6 +26,7 @@ const photosSlice = createSlice({
     editPhotoCaption(state, action) {
       const { id, newCaption } = action.payload;
       const photo = state.photos.find((photo) => photo.id === id);
+
       if (photo) {
         photo.caption = newCaption;
       }
@@ -39,8 +40,6 @@ export const {
   toggleFavorite,
   editPhotoCaption,
 } = photosSlice.actions;
-
-export const selectAllPhotos = (state) => state.photos.photos;
 
 export const selectFilteredPhotos = (state) => {
   const photos = state.photos.photos;
