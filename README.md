@@ -1,27 +1,68 @@
-# Starter redux assessment: Doggiegram
+# 🐶 Doggiegram
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Doggiegram is a simple full-stack web application that allows users to browse, add, and manage photos of dogs. It demonstrates core React and Redux concepts along with clean UI/UX design and state management.
 
-## Available scripts
+---
 
-In the project directory, you can run the following commands:
+## 📌 Project Overview
 
-### `npm install`
+Doggiegram allows users to:
 
-Installs the project dependencies, including Redux packages such as @reduxjs/toolkit and react-redux.
+- View a gallery of dog photos
+- Add new dog photos with captions
+- Favorite photos
+- Edit photo captions
+- Delete photos
+- Search photos by caption
 
-### `npm run dev`
+This project focuses on building a dynamic and interactive UI using React, while managing global state with Redux.
 
-Runs the React app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-Runs an Express API at `http://localhost:3004` that exposes a single endpoint, `GET /api/suggestion`, which returns a dog suggestion at random.
+## ✨ Features
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- 📸 Add new dog photos with captions
+- 🔍 Search photos by caption
+- ❤️ Mark photos as favorites
+- ✏️ Edit photo captions
+- 🗑️ Delete photos
+- 🚫 Prevent duplicate photo entries
+- 🎨 Responsive card-based UI layout
+- ⚡ Real-time UI updates using Redux state
 
-### `npm test`
+---
 
-Runs the test suites.
+## 🛠️ Technologies Used
 
-I used AI mainly to support my understanding of concepts rather than to fix issues directly.
+- React
+- Redux Toolkit
+- JavaScript (ES6+)
+- HTML & CSS
+- React Testing Library
+
+---
+
+## ⚙️ Setup Instructions
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/your-username/doggiegram.git
+cd doggiegram
+
+---
+
+## 🤖 AI Usage Disclosure
+
+This project utilized AI assistance through ChatGPT (OpenAI).
+
+ChatGPT was used for:
+
+- Understanding core concepts such as React components, hooks, and Redux state management
+- Learning general approaches to improving UI/UX design and layout
+- Gaining guidance on best practices for input validation and application structure
+- Structuring and improving documentation in the README
+
+AI was not used to directly debug or fix specific errors in the project code. All implementation, problem-solving, and debugging were completed independently.
+
+---

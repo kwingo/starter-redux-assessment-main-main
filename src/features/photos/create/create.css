@@ -37,3 +37,12 @@
   background-color: #fff;
   color: #000;
 }
+
+.form-error {
+  color: #b00020;
+  background: #ffe5e5;
+  border: 1px solid #ffb3b3;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}

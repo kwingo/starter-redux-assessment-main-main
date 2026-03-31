@@ -1,13 +1,13 @@
 import "./list.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
-  selectFilteredPhotos,
   removePhoto,
   toggleFavorite,
   editPhotoCaption,
+  selectFilteredPhotos,
 } from "../photos.slice";
 
-export default function PhotosList() {
+function PhotosList() {
   const dispatch = useDispatch();
   const photos = useSelector(selectFilteredPhotos);
 
@@ -15,31 +15,61 @@ export default function PhotosList() {
     dispatch(removePhoto(id));
   };
 
-  const handleToggleFavorite = (id) => {
+  const handleFavorite = (id) => {
     dispatch(toggleFavorite(id));
   };
 
-  const handleEditCaption = (id) => {
-    const newCaption = prompt("Enter new caption:");
+  const handleEditCaption = (id, currentCaption) => {
+    const newCaption = window.prompt("Enter a new caption:", currentCaption);
 
-    if (newCaption && newCaption.trim() !== "") {
-      dispatch(editPhotoCaption({ id, newCaption }));
+    if (newCaption === null) {
+      return;
     }
+
+    if (newCaption.trim() === "") {
+      window.alert("Caption cannot be empty");
+      return;
+    }
+
+    dispatch(
+      editPhotoCaption({
+        id,
+        caption: newCaption.trim(),
+      })
+    );
   };
 
   return (
-    <ul>
+    <ul className="photo-list">
       {photos.map((photo) => (
-        <li key={photo.id}>
-          <img src={photo.imageUrl} alt={photo.caption} />
-          <p>{photo.caption}</p>
+        <li key={photo.id} className="photo-card">
+          <img
+            className="photo-image"
+            alt={photo.caption}
+            src={photo.imageUrl}
+          />
+
+          <p className="photo-caption">{photo.caption}</p>
 
           <div className="photo-actions">
-            <button onClick={() => handleDelete(photo.id)}>Delete</button>
-            <button onClick={() => handleToggleFavorite(photo.id)}>
-              {photo.isFavorite ? "Favorited" : "Favorite"}
+            <button
+              data-testid={`${photo.id}-delete-button`}
+              onClick={() => handleDelete(photo.id)}
+            >
+              Delete
             </button>
-            <button onClick={() => handleEditCaption(photo.id)}>
+
+            <button
+              data-testid={`${photo.id}-favorite-button`}
+              onClick={() => handleFavorite(photo.id)}
+            >
+              {photo.favorite ? "Unfavorite" : "Favorite"}
+            </button>
+
+            <button
+              data-testid={`${photo.id}-edit-button`}
+              onClick={() => handleEditCaption(photo.id, photo.caption)}
+            >
               Edit Caption
             </button>
           </div>
@@ -48,3 +78,5 @@ export default function PhotosList() {
     </ul>
   );
 }
+
+export default PhotosList;
